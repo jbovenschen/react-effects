@@ -8,13 +8,20 @@
   "scripts": {
     "website:dev": "yarn manypkg run website dev",
     "website:start": "yarn manypkg run website start",
-    "website:build": "yarn manypkg run website build"
+    "website:build": "yarn manypkg run website build",
+    "build": "preconstruct build"
   },
   "workspaces": [
     "packages/*",
     "website"
   ],
-  "dependencies": {
-    "@manypkg/cli": "^0.16.1"
+  "devDependencies": {
+    "@manypkg/cli": "^0.16.1",
+    "@preconstruct/cli": "^1.1.33"
+  },
+  "preconstruct": {
+    "packages": [
+      "packages/*"
+    ]
   }
 }
