@@ -1,0 +1,9 @@
+{
+  "name": "@react-effects/fireworks",
+  "version": "0.0.0",
+  "description": "Fireworks",
+  "main": "src/index.js",
+  "author": "Jaco Bovenschen",
+  "license": "MIT",
+  "private": false
+}
