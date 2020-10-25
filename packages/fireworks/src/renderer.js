@@ -90,8 +90,7 @@ function Particle(config, { onCompleted }) {
   const instance = {
     update: function update(bounds) {
       if (status === "initial") {
-        x = config.tx(bounds);
-        y = config.ty(bounds);
+        [x, y] = config.target(bounds);
 
         angle = config.particle.angle();
         speed = config.particle.speed();
@@ -189,12 +188,10 @@ function Trail(config, { onCompleted }) {
     },
     update: function update(bounds, _t) {
       // From positions
-      sx = config.sx(bounds);
-      sy = config.sy(bounds);
+      [sx, sy] = config.start(bounds);
 
       // Target positions
-      tx = config.tx(bounds);
-      ty = config.ty(bounds);
+      [tx, ty] = config.target(bounds);
 
       // Calculate the angle of the trail effect
       angle = Math.atan2(ty - sy, tx - sx);
@@ -335,10 +332,8 @@ const defaultConfig = {
 
 function mergeConfigs(a, b) {
   return {
-    sx: b.sx || a.sx,
-    sy: b.sy || a.sy,
-    tx: b.tx || a.ty,
-    ty: b.ty || a.ty,
+    start: b.start || a.start,
+    target: b.target || a.target,
     colors: b.colors || a.colors,
     particles: b.particles || a.particles,
     delay: b.delay || a.delay,

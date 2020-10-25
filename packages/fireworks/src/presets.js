@@ -35,30 +35,33 @@ function deCasteljau(points, t) {
 function useFireworkArc({ interval = 0, ...config } = {}) {
   const dots = [0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9];
 
-  const points = [
-    // start
-    [-150, 0],
-    // control points
-    [-150, 150],
-    [150, 150],
-    // end
-    [150, 0],
-  ];
-
   const run = useFireworks({
     ...config,
-    sx: () => 0,
-    sy: ({ top }) => top,
+    start: ({ top }) => [0, top],
   });
 
   return React.useCallback(() => {
     for (let i = 0; i < dots.length; i++) {
-      const [_x, _y] = deCasteljau(points, dots[i]);
-
+      let target;
       run({
         delay: interval * i,
-        tx: () => 0 + _x,
-        ty: ({ top }) => top + _y,
+        target: ({ top, left }) => {
+          if (!target) {
+            const points = [
+              // start
+              [left * 3, 0],
+              // control points
+              [left * 3, Math.abs(left * 3)],
+              [Math.abs(left * 3), Math.abs(left * 3)],
+              // end
+              [Math.abs(left * 3), 0],
+            ];
+
+            target = deCasteljau(points, dots[i]);
+          }
+
+          return [target[0], target[1] + top];
+        },
       });
     }
   }, []);
@@ -67,21 +70,27 @@ function useFireworkArc({ interval = 0, ...config } = {}) {
 function useFireworkRandom({ interval = 0, ...config } = {}) {
   const run = useFireworks({
     ...config,
-    sx: () => 0,
-    sy: ({ top }) => top,
+    start: ({ top }) => [0, top],
   });
 
   const count = 8;
 
   return React.useCallback(() => {
     for (let i = 0; i <= count; i++) {
-      const x = random(-150, 150);
-      const y = random(50, 150);
+      let target;
 
       run({
         delay: interval * i,
-        tx: () => 0 + x,
-        ty: ({ top }) => top + y,
+        target: ({ left, top }) => {
+          if (!target) {
+            target = [
+              random(left * 2, Math.abs(left * 2)),
+              random(Math.abs(left * 2), Math.abs(left)),
+            ];
+          }
+
+          return [target[0], target[1] + top];
+        },
       });
     }
   }, []);
