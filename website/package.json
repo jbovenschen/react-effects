@@ -1,0 +1,19 @@
+{
+  "name": "@react-effects/website",
+  "version": "0.0.0",
+  "description": "Website",
+  "main": "index.js",
+  "author": "Jaco Bovenschen",
+  "license": "UNLICENSED",
+  "private": true,
+  "dependencies": {
+    "next": "^9.5.5",
+    "react": "^17.0.1",
+    "react-dom": "^17.0.1"
+  },
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start"
+  }
+}

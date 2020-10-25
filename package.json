@@ -6,13 +6,15 @@
   "license": "UNLICENSED",
   "private": true,
   "scripts": {
-    "dev": "next dev",
-    "build": "next build",
-    "start": "next start"
-  },  
+    "website:dev": "yarn manypkg run website dev",
+    "website:start": "yarn manypkg run website start",
+    "website:build": "yarn manypkg run website build"
+  },
+  "workspaces": [
+    "packages/*",
+    "website"
+  ],
   "dependencies": {
-    "next": "^9.5.5",
-    "react": "^17.0.1",
-    "react-dom": "^17.0.1"
+    "@manypkg/cli": "^0.16.1"
   }
 }
