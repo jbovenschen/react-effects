@@ -4,7 +4,7 @@ let canvas = undefined;
 let ctx = undefined;
 let rafId = undefined;
 
-const configs = new Map();
+const targets = new Map();
 const effects = new Map();
 
 function getPosition(node) {
@@ -40,7 +40,9 @@ function loop(time = performance.now()) {
   ctx.globalCompositeOperation = "lighter";
 
   // Update particles and fireworks
-  for (let [effect, node] of effects.entries()) {
+  for (let [effect, identifier] of effects.entries()) {
+    const node = targets.get(identifier).current;
+
     // Check if the node is not already measured in current tick
     if (!nodeSizes.has(node)) {
       if (document.body.contains(node)) {
@@ -100,7 +102,10 @@ function Particle(config, { onCompleted }) {
 
         color = randomItem(config.colors);
 
-        coordinates = Array.from({ length: config.particle.stretch }, () => [x, y]);
+        coordinates = Array.from({ length: config.particle.stretch }, () => [
+          x,
+          y,
+        ]);
 
         status = "active";
       } else if (status === "active") {
@@ -211,7 +216,10 @@ function Trail(config, { onCompleted }) {
 
         distance = calculateDistance(sx, sy, tx, ty);
 
-        coordinates = Array.from({ length: config.trail.stretch }, () => [x, y]);
+        coordinates = Array.from({ length: config.trail.stretch }, () => [
+          x,
+          y,
+        ]);
 
         if (_t - t > delay) {
           status = "active";
@@ -254,34 +262,34 @@ function Trail(config, { onCompleted }) {
   return instance;
 }
 
-function run(node, config = {}) {
-  let conf = Object.assign({}, configs.get(node), config);
-
+function fire(identifier, config) {
   if (config.colors) {
-    conf.colors = convertColors(config.colors);
+    config.colors = convertColors(config.colors);
   }
 
-  const trail = Trail(conf, {
+  const trail = Trail(config, {
     onCompleted: (instance) => {
       effects.delete(instance);
 
-      console.log(conf.particles());
-
-      let particleCount = conf.particles();
+      let particleCount = config.particles();
 
       while (particleCount--) {
-        const particle = Particle(conf, {
+        const particle = Particle(config, {
           onCompleted: (instance) => {
             effects.delete(instance);
+
+            if (effects.size === 0) {
+              console.log("Remove canvas");
+            }
           },
         });
 
-        effects.set(particle, node);
+        effects.set(particle, identifier);
       }
     },
   });
 
-  effects.set(trail, node);
+  effects.set(trail, identifier);
 
   if (rafId == null) {
     // If it was empty we should set a new canvas
@@ -325,16 +333,44 @@ const defaultConfig = {
   },
 };
 
-function register(node, config) {
-  const conf = Object.assign({}, defaultConfig, config);
-
-  conf.colors = convertColors(config.colors);
-
-  configs.set(node, conf);
-
-  return function unregister() {
-    configs.delete(node);
+function mergeConfigs(a, b) {
+  return {
+    sx: b.sx || a.sx,
+    sy: b.sy || a.sy,
+    tx: b.tx || a.ty,
+    ty: b.ty || a.ty,
+    colors: b.colors || a.colors,
+    particles: b.particles || a.particles,
+    delay: b.delay || a.delay,
+    particle: {
+      stretch: b.particle?.stretch || a.particle.stretch,
+      angle: b.particle?.angle || a.particle.angle,
+      speed: b.particle?.speed || a.particle.speed,
+      decay: b.particle?.decay || a.particle.decay,
+      friction: b.particle?.stretch || a.particle.friction,
+      gravity: b.particle?.angle || a.particle.gravity,
+    },
+    trail: {
+      stretch: b.trail?.stretch || a.trail.stretch,
+      speed: b.trail?.stretch || a.trail.stretch,
+      acceleration: b.trail?.acceleration || a.trail.acceleration,
+    },
   };
 }
 
-export { run, register };
+function Fireworks({ target, ...config }) {
+  const id = Symbol();
+
+  const conf = mergeConfigs(defaultConfig, config);
+
+  targets.set(id, target);
+
+  return {
+    remove: function remove() {
+      targets.delete(id);
+    },
+    fire: (config) => fire(id, mergeConfigs(conf, config)),
+  };
+}
+
+export default Fireworks;

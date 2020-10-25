@@ -1,14 +1,16 @@
 import * as React from "react";
 
-import { run, register } from "./renderer";
+import Firework from "./renderer";
 
-function useFireworks(ref, config) {
+function useFireworks(config) {
+  const instance = React.useRef(Firework(config));
+
   React.useEffect(() => {
-    return register(ref.current, config);
+    return instance.current.remove;
   }, []);
 
   return React.useCallback((config) => {
-    run(ref.current, config);
+    instance.current.fire(config);
   }, []);
 }
 

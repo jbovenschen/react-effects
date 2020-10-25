@@ -32,7 +32,7 @@ function deCasteljau(points, t) {
   return deCasteljau(p, t);
 }
 
-function useFireworkArc(ref, { interval = 0, ...config } = {}) {
+function useFireworkArc({ interval = 0, ...config } = {}) {
   const dots = [0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9];
 
   const points = [
@@ -45,21 +45,7 @@ function useFireworkArc(ref, { interval = 0, ...config } = {}) {
     [150, 0],
   ];
 
-  /*
-  {
-    start: ({ ...bounds }) => ([x, y]),
-    target: () => ([x, y]),
-    delay: Number,
-    particles: {
-      
-    },
-    trail: {
-
-    }
-  }
-  */
-
-  const run = useFireworks(ref, {
+  const run = useFireworks({
     ...config,
     sx: () => 0,
     sy: ({ top }) => top,
@@ -78,8 +64,8 @@ function useFireworkArc(ref, { interval = 0, ...config } = {}) {
   }, []);
 }
 
-function useFireworkRandom(ref, { interval = 0, ...config } = {}) {
-  const run = useFireworks(ref, {
+function useFireworkRandom({ interval = 0, ...config } = {}) {
+  const run = useFireworks({
     ...config,
     sx: () => 0,
     sy: ({ top }) => top,
