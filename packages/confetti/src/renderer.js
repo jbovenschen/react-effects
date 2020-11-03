@@ -120,10 +120,7 @@ function Confetti(config, { onCompleted }) {
 
   let opacity = undefined;
 
-  const size = 8;
-
-  const h = size / 2 + Math.random() * (size / 2);
-  const w = size / 2 + Math.random() * (size / 2);
+  let size = undefined;
 
   let instance = {
     draw: function draw(ctx, origin) {
@@ -182,7 +179,7 @@ function Confetti(config, { onCompleted }) {
         // Set initial opacity
         opacity = 1;
 
-        points = rotate(shape(size), {
+        points = rotate(shape(config.size()), {
           rotateX,
           rotateY,
           rotateZ,
@@ -209,8 +206,8 @@ function Confetti(config, { onCompleted }) {
 
           points = rotate(
             transform(points, {
-              transformX: Math.random() * wobbleX - wobbleX / 2,
-              transformY: Math.random() * wobbleY - wobbleY / 2,
+              transformX: -(wobbleX / 2) + wobbleX,
+              transformY: -(wobbleY / 2) + wobbleY,
             }),
             {
               rotateX: config.tilt(),
@@ -353,12 +350,13 @@ const defaultConfig = {
   shapes: [square, rectangle, triangle, polygon, star],
   angle: 90,
   decay: () => random(0.85, 0.9),
-  velocity: () => random(6, 30),
+  velocity: () => random(12, 30),
   gravity: () => random(1.8, 2),
   spread: () => random(20, 60),
   tilt: () => random(0, 4),
   wobble: () => random(0, 1),
-  duration: 2000,
+  size: () => random(6, 10),
+  duration: 1000,
 };
 
 function mergeConfigs(a, b) {
@@ -375,6 +373,7 @@ function mergeConfigs(a, b) {
     tilt: b.tilt || a.tilt,
     wobble: b.wobble || a.wobble,
     duration: b.duration || a.duration,
+    size: b.size || a.size,
   };
 }
 
