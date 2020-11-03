@@ -201,13 +201,10 @@ function Confetti(config, { onCompleted }) {
           onCompleted(instance);
         } else {
           // Get a random wobble for each tick
-          const wobbleX = config.wobble();
-          const wobbleY = config.wobble();
-
           points = rotate(
             transform(points, {
-              transformX: -(wobbleX / 2) + wobbleX,
-              transformY: -(wobbleY / 2) + wobbleY,
+              transformX: config.wobble(),
+              transformY: config.wobble(),
             }),
             {
               rotateX: config.tilt(),
@@ -353,8 +350,8 @@ const defaultConfig = {
   velocity: () => random(12, 30),
   gravity: () => random(1.8, 2),
   spread: () => random(20, 60),
-  tilt: () => random(0, 4),
-  wobble: () => random(0, 1),
+  tilt: () => random(-2, -2),
+  wobble: () => random(-0.5, 0.5),
   size: () => random(6, 10),
   duration: 1000,
 };
