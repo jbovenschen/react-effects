@@ -134,10 +134,12 @@ function Confetti(config, { onCompleted }) {
       ctx.save();
       ctx.beginPath();
 
-      ctx.moveTo(origin[0] + x + points[0][0], origin[1] - y + points[0][1]);
-      ctx.lineTo(origin[0] + x + points[1][0], origin[1] - y + points[1][1]);
-      ctx.lineTo(origin[0] + x + points[2][0], origin[1] - y + points[2][1]);
-      ctx.lineTo(origin[0] + x + points[3][0], origin[1] - y + points[3][1]);
+      for (let i = 0; i < points.length; i++) {
+        ctx[i === 0 ? "moveTo" : "lineTo"](
+          origin[0] + x + points[i][0],
+          origin[1] - y + points[i][1]
+        );
+      }
 
       ctx.closePath();
 
@@ -175,28 +177,16 @@ function Confetti(config, { onCompleted }) {
         rotateY = Math.random() * 360;
         rotateZ = Math.random() * 360;
 
-        // Set the initial sizes of a rectangular shape
-        const x1 = -(w / 2);
-        const y1 = -(h / 2);
-        const x2 = +(w / 2);
-        const y2 = +(h / 2);
+        const shape = randomItem(config.shapes);
 
         // Set initial opacity
         opacity = 1;
 
-        points = rotate(
-          [
-            [x1, y1, 0],
-            [x2, y1, 0],
-            [x2, y2, 0],
-            [x1, y2, 0],
-          ],
-          {
-            rotateX,
-            rotateY,
-            rotateZ,
-          }
-        );
+        points = rotate(shape(size), {
+          rotateX,
+          rotateY,
+          rotateZ,
+        });
 
         status = "active";
       } else if (status === "active") {
@@ -216,18 +206,6 @@ function Confetti(config, { onCompleted }) {
           // Get a random wobble for each tick
           const wobbleX = config.wobble();
           const wobbleY = config.wobble();
-
-          points = rotate(
-            transform(points, {
-              transformX: Math.random() * wobbleX - wobbleX / 2,
-              transformY: Math.random() * wobbleY - wobbleY / 2,
-            }),
-            {
-              rotateX: config.tilt(),
-              rotateY: config.tilt(),
-              rotateZ: config.tilt(),
-            }
-          );
 
           points = rotate(
             transform(points, {
@@ -292,9 +270,87 @@ function fire(identifier, config) {
   }
 }
 
+function square(size) {
+  const x1 = -(size / 2);
+  const y1 = -(size / 2);
+  const x2 = +(size / 2);
+  const y2 = +(size / 2);
+
+  return [
+    [x1, y1, 0],
+    [x2, y1, 0],
+    [x2, y2, 0],
+    [x1, y2, 0],
+  ];
+}
+
+function rectangle(size) {
+  const h = size / 2 + Math.random() * (size / 2);
+  const w = size / 2 + Math.random() * (size / 2);
+
+  // Set the initial sizes of a rectangular shape
+  const x1 = -(w / 2);
+  const y1 = -(h / 2);
+  const x2 = +(w / 2);
+  const y2 = +(h / 2);
+
+  return [
+    [x1, y1, 0],
+    [x2, y1, 0],
+    [x2, y2, 0],
+    [x1, y2, 0],
+  ];
+}
+
+function triangle(size) {
+  return [
+    [0, -(size / 2), 0],
+    [-(size / 2), +(size / 2), 0],
+    [+(size / 2), +(size / 2), 0],
+  ];
+}
+
+function polygon(size, sides) {
+  const points = [];
+
+  const N = sides || random(5, 12);
+
+  for (let i = 0; i < N; i++) {
+    const theta = (i * (Math.PI * 2)) / N;
+
+    points.push([
+      -(size / 2) + (size / 2) * Math.cos(theta),
+      -(size / 2) + (size / 2) * Math.sin(theta),
+      0,
+    ]);
+  }
+
+  return points;
+}
+
+function star(size, sides) {
+  const points = [];
+
+  const N = sides || random(10, 14);
+
+  for (let i = 0; i < N; i++) {
+    const theta = (i * (Math.PI * 2)) / N;
+    const r = size / (i % 2 === 0 ? 4 : 2);
+
+    points.push([
+      -(size / 2) + (size / 2 + r * Math.cos(theta)),
+      -(size / 2) + size / 2 + r * Math.sin(theta),
+      0,
+    ]);
+  }
+
+  return points;
+}
+
 const defaultConfig = {
   colors: ["#000"],
   particles: () => Math.round(random(200, 300)),
+  shapes: [square, rectangle, triangle, polygon, star],
   angle: 90,
   decay: () => random(0.85, 0.9),
   velocity: () => random(6, 30),
@@ -309,6 +365,7 @@ function mergeConfigs(a, b) {
   return {
     start: b.start || a.start,
     colors: b.colors || a.colors,
+    shapes: b.shapes || a.shapes,
     particles: b.particles || a.particles,
     angle: b.angle || a.angle,
     spread: b.spread || a.spread,
