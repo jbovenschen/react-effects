@@ -119,8 +119,7 @@ function Confetti(config, { onCompleted }) {
   let rotateZ = undefined;
 
   let opacity = undefined;
-
-  let size = undefined;
+  let fade = undefined;
 
   let instance = {
     draw: function draw(ctx, origin) {
@@ -178,6 +177,7 @@ function Confetti(config, { onCompleted }) {
 
         // Set initial opacity
         opacity = 1;
+        fade = config.fade();
 
         points = rotate(shape(config.size()), {
           rotateX,
@@ -194,7 +194,7 @@ function Confetti(config, { onCompleted }) {
 
         if (t + config.duration < _t) {
           // TODO make fade stable
-          opacity -= Math.random() / 100;
+          opacity -= fade;
         }
 
         if (opacity < 0) {
@@ -343,17 +343,18 @@ function star(size, sides) {
 
 const defaultConfig = {
   colors: ["#000"],
-  particles: () => Math.round(random(200, 300)),
   shapes: [square, rectangle, triangle, polygon, star],
+  particles: () => Math.round(random(200, 300)),
   angle: 90,
+  spread: () => random(20, 60),
   decay: () => random(0.85, 0.9),
   velocity: () => random(12, 30),
-  gravity: () => random(1.8, 2),
-  spread: () => random(20, 60),
+  gravity: () => random(1.5, 2),
   tilt: () => random(-2, -2),
   wobble: () => random(-0.5, 0.5),
   size: () => random(6, 10),
-  duration: 1000,
+  fade: () => random(0.01, 0.03),
+  duration: 2000,
 };
 
 function mergeConfigs(a, b) {
@@ -371,6 +372,7 @@ function mergeConfigs(a, b) {
     wobble: b.wobble || a.wobble,
     duration: b.duration || a.duration,
     size: b.size || a.size,
+    fade: b.fade || a.fade,
   };
 }
 
