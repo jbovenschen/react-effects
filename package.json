@@ -23,5 +23,8 @@
     "packages": [
       "packages/*"
     ]
+  },
+  "dependencies": {
+    "@changesets/cli": "^2.11.2"
   }
 }
