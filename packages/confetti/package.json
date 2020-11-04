@@ -3,6 +3,8 @@
   "version": "0.0.0",
   "description": "Confetti",
   "main": "dist/confetti.cjs.js",
+  "module": "dist/confetti.esm.js",
+  "umd:main": "dist/confetti.umd.min.js",
   "author": "Jaco Bovenschen",
   "license": "MIT",
   "devDependencies": {
@@ -10,5 +12,8 @@
   },
   "peerDependencies": {
     "react": "^17.0.1"
+  },
+  "preconstruct": {
+    "umdName": "ReactEffectsConfetti"
   }
 }

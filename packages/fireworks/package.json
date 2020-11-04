@@ -3,6 +3,8 @@
   "version": "0.0.0",
   "description": "Fireworks",
   "main": "dist/fireworks.cjs.js",
+  "module": "dist/fireworks.esm.js",
+  "umd:main": "dist/fireworks.umd.min.js",
   "author": "Jaco Bovenschen",
   "license": "MIT",
   "private": false,
@@ -11,5 +13,8 @@
   },
   "peerDependencies": {
     "react": "^17.0.1"
+  },
+  "preconstruct": {
+    "umdName": "ReactEffectsFireworks"
   }
 }

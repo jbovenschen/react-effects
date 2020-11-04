@@ -17,14 +17,15 @@
   ],
   "devDependencies": {
     "@manypkg/cli": "^0.16.1",
-    "@preconstruct/cli": "^1.1.33"
+    "@preconstruct/cli": "^1.1.33",
+    "@changesets/cli": "^2.11.2"
   },
   "preconstruct": {
     "packages": [
       "packages/*"
-    ]
-  },
-  "dependencies": {
-    "@changesets/cli": "^2.11.2"
+    ],
+    "globals": {
+      "react": "React"
+    }
   }
 }
