@@ -1,6 +1,6 @@
 {
   "name": "@react-effects/confetti",
-  "version": "0.0.0",
+  "version": "0.0.1",
   "description": "Confetti",
   "main": "dist/confetti.cjs.js",
   "module": "dist/confetti.esm.js",
