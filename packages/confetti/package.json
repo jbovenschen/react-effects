@@ -2,7 +2,13 @@
   "name": "@react-effects/confetti",
   "version": "0.0.0",
   "description": "Confetti",
-  "main": "src/index.js",
+  "main": "dist/confetti.cjs.js",
   "author": "Jaco Bovenschen",
-  "license": "MIT"
+  "license": "MIT",
+  "devDependencies": {
+    "react": "^17.0.1"
+  },
+  "peerDependencies": {
+    "react": "^17.0.1"
+  }
 }

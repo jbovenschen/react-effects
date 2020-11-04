@@ -2,8 +2,14 @@
   "name": "@react-effects/fireworks",
   "version": "0.0.0",
   "description": "Fireworks",
-  "main": "src/index.js",
+  "main": "dist/fireworks.cjs.js",
   "author": "Jaco Bovenschen",
   "license": "MIT",
-  "private": false
+  "private": false,
+  "devDependencies": {
+    "react": "^17.0.1"
+  },
+  "peerDependencies": {
+    "react": "^17.0.1"
+  }
 }
