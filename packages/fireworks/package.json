@@ -1,6 +1,6 @@
 {
   "name": "@react-effects/fireworks",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "Fireworks",
   "main": "dist/fireworks.cjs.js",
   "module": "dist/fireworks.esm.js",
