@@ -233,7 +233,9 @@ function fire(identifier, config) {
         effects.delete(instance);
 
         if (effects.size === 0) {
-          console.log("Remove canvas");
+          document.body.removeChild(canvas);
+
+          canvas = undefined;
         }
       },
     });
@@ -351,7 +353,7 @@ const defaultConfig = {
   velocity: () => random(12, 30),
   gravity: () => random(1.5, 2),
   tilt: () => random(-2, -2),
-  wobble: () => random(-0.5, 0.5),
+  wobble: () => random(-0.2, 0.2),
   size: () => random(6, 10),
   fade: () => random(0.01, 0.03),
   duration: 2000,

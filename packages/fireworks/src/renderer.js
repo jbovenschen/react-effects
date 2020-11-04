@@ -276,7 +276,9 @@ function fire(identifier, config) {
             effects.delete(instance);
 
             if (effects.size === 0) {
-              console.log("Remove canvas");
+              document.body.removeChild(canvas);
+
+              canvas = undefined;
             }
           },
         });
