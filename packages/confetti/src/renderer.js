@@ -378,12 +378,12 @@ function mergeConfigs(a, b) {
   };
 }
 
-function Confettis({ target, ...config }) {
+function Confettis({ element, ...config }) {
   const id = Symbol();
 
   const conf = mergeConfigs(defaultConfig, config);
 
-  targets.set(id, target);
+  targets.set(id, element);
 
   return {
     remove: function remove() {

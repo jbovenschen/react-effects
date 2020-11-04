@@ -355,12 +355,12 @@ function mergeConfigs(a, b) {
   };
 }
 
-function Fireworks({ target, ...config }) {
+function Fireworks({ element, ...config }) {
   const id = Symbol();
 
   const conf = mergeConfigs(defaultConfig, config);
 
-  targets.set(id, target);
+  targets.set(id, element);
 
   return {
     remove: function remove() {
