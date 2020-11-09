@@ -1,4 +1,6 @@
-import { calculateDistance, randomItem, random, convertColors } from "./utils";
+import { randomItem, random, convertColors } from "@react-effects/utils";
+
+import { calculateDistance } from './utils';
 
 let canvas = undefined;
 let ctx = undefined;

@@ -1,6 +1,7 @@
 import * as React from "react";
 
-import { random } from "./utils";
+import { random } from "@react-effects/utils";
+
 import { useFireworks } from "./base";
 
 function deCasteljau(points, t) {

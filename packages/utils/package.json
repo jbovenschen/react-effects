@@ -1,0 +1,20 @@
+{
+  "name": "@react-effects/utils",
+  "version": "0.0.2",
+  "description": "React effects utilities",
+  "main": "dist/utils.cjs.js",
+  "module": "dist/utils.esm.js",
+  "umd:main": "dist/utils.umd.min.js",
+  "author": "Jaco Bovenschen",
+  "license": "MIT",
+  "private": false,
+  "devDependencies": {
+    "react": "^17.0.1"
+  },
+  "peerDependencies": {
+    "react": "^17.0.1"
+  },
+  "preconstruct": {
+    "umdName": "ReactEffectUtils"
+  }
+}

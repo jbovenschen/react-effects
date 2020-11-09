@@ -8,11 +8,6 @@ function randomItem(items) {
   return items[Math.floor(Math.random() * items.length)];
 }
 
-// Get the distance between 2 points on the canvas
-function calculateDistance(x1, y1, x2, y2) {
-  return Math.sqrt(Math.pow(x1 - x2, 2) + Math.pow(y1 - y2, 2));
-}
-
 function convertColors(colors) {
   return colors.map((hex) => {
     return hex
@@ -26,4 +21,4 @@ function convertColors(colors) {
   });
 }
 
-export { random, randomItem, calculateDistance, convertColors };
+export { random, randomItem, convertColors };

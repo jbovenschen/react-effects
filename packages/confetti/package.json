@@ -7,6 +7,9 @@
   "umd:main": "dist/confetti.umd.min.js",
   "author": "Jaco Bovenschen",
   "license": "MIT",
+  "dependencies": {
+    "@react-effects/utils": "^0.0.2"
+  },
   "devDependencies": {
     "react": "^17.0.1"
   },
