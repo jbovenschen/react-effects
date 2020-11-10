@@ -3,6 +3,9 @@ import { createStyled } from "@stitches/react";
 export const { styled, css } = createStyled({
   tokens: {
     colors: {
+      $black: "#000",
+      $white: "#fff",
+
       // Gray
       $gray0: "#f8f9fa",
       $gray1: "#f1f3f5",
@@ -146,6 +149,33 @@ export const { styled, css } = createStyled({
       $orange7: "#f76707",
       $orange8: "#e8590c",
       $orange9: "#d9480f",
+    },
+    fonts: {
+      $body: "Quicksand, apply-system, sans-serif",
+      $heading: "Oswald, apply-system, sans-serif",
+    },
+    fontSizes: {
+      $0: '0.833rem',
+      $1: '1rem',
+      $2: '1.2rem',
+      $3: '1.44rem',
+      $4: '1.728rem',
+      $5: '2.074rem',
+      $6: '2.488rem',
+    },
+    space: {
+      $1: "2px",
+      $2: "4px",
+      $3: "8px",
+      $4: "16px",
+      $5: "32px",
+    },
+    borderWidths: {
+      $1: "2px",
+      $2: "4px",
+    },
+    radii: {
+      $1: "4px",
     },
   },
 });

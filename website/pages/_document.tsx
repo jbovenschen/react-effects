@@ -1,5 +1,12 @@
 import React from "react";
-import NextDocument, { DocumentContext } from "next/document";
+import NextDocument, {
+  Html,
+  Head,
+  Main,
+  DocumentContext,
+  NextScript,
+} from "next/document";
+
 import { css } from "../stitches.config";
 
 export default class Document extends NextDocument {
@@ -33,5 +40,19 @@ export default class Document extends NextDocument {
       };
     } finally {
     }
+  }
+
+  render() {
+    return (
+      <Html>
+        <Head>
+          <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@600&family=Quicksand:wght@400;500;700&display=swap" rel="stylesheet" />
+        </Head>
+        <body>
+          <Main />
+          <NextScript />
+        </body>
+      </Html>
+    );
   }
 }
