@@ -8,11 +8,12 @@
   "private": true,
   "dependencies": {
     "@preconstruct/next": "^2.0.0",
+    "@react-effects/confetti": "0.0.2",
+    "@react-effects/fireworks": "0.0.2",
+    "@stitches/react": "^0.0.2",
     "next": "^9.5.5",
     "react": "^17.0.1",
-    "react-dom": "^17.0.1",
-    "@react-effects/fireworks": "0.0.2",
-    "@react-effects/confetti": "0.0.2"
+    "react-dom": "^17.0.1"
   },
   "scripts": {
     "dev": "next dev",
